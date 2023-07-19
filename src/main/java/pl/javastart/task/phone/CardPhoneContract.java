@@ -75,7 +75,8 @@ public class CardPhoneContract extends PhoneContract {
 
     @Override
     public String toString() {
-        return String.format("%s%nNa koncie zostało %.2f zł", super.toString(), accountState);
+        return String.format("%s%nNa koncie zostało %.2f zł",
+                super.toString(), accountState);
     }
 
     @Override

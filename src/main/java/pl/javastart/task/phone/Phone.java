@@ -46,8 +46,12 @@ public class Phone {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Phone phone)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Phone phone)) {
+            return false;
+        }
         return Objects.equals(phoneContract, phone.phoneContract);
     }
 

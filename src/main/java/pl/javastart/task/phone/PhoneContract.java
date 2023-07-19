@@ -6,8 +6,11 @@ public abstract class PhoneContract {
     int sentSms = 0;
     int sentMms = 0;
     int callSeconds = 0;
+
     abstract boolean performSmsSending();
+
     abstract int performCalling(int seconds);
+
     abstract boolean performMmsSending();
 
     public int getSentSms() {
@@ -30,8 +33,12 @@ public abstract class PhoneContract {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof PhoneContract that)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof PhoneContract that)) {
+            return false;
+        }
         return sentSms == that.sentSms && sentMms == that.sentMms && callSeconds == that.callSeconds;
     }
 
