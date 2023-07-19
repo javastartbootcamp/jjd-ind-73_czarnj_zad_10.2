@@ -90,7 +90,10 @@ public class CardPhoneContract extends PhoneContract {
         if (!super.equals(o)) {
             return false;
         }
-        return Double.compare(that.accountState, accountState) == 0 && Double.compare(that.smsCost, smsCost) == 0 && Double.compare(that.mmsCost, mmsCost) == 0 && Double.compare(that.callCostPerMinute, callCostPerMinute) == 0;
+        return Double.compare(that.accountState, accountState) == 0 &&
+                Double.compare(that.smsCost, smsCost) == 0 &&
+                Double.compare(that.mmsCost, mmsCost) == 0 &&
+                Double.compare(that.callCostPerMinute, callCostPerMinute) == 0;
     }
 
     @Override
