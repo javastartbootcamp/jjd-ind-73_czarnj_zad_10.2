@@ -5,14 +5,14 @@ import java.util.Objects;
 public class MixPhoneContract extends CardPhoneContract {
     int smsAmountLeft;
     int mmsAmountLeft;
-    int callMinutesAmountLeft;
+    int callSecondsAmountLeft;
 
-    public MixPhoneContract(double accountState, double smsCost, double mmsCost, double callCostPerMinute, 
+    public MixPhoneContract(double accountState, double smsCost, double mmsCost, double callCostPerMinute,
                             int startSmsAmount, int startMmsAmount, int startCallMinutesAmount) {
         super(accountState, smsCost, mmsCost, callCostPerMinute);
         this.smsAmountLeft = startSmsAmount;
         this.mmsAmountLeft = startMmsAmount;
-        this.callMinutesAmountLeft = startCallMinutesAmount;
+        this.callSecondsAmountLeft = startCallMinutesAmount * SECONDS_IN_MINUTE;
     }
 
     @Override
@@ -28,16 +28,16 @@ public class MixPhoneContract extends CardPhoneContract {
 
     @Override
     int performCalling(int seconds) {
-        int callMinutesAmountLeftInSeconds = callMinutesAmountLeft * SECONDS_IN_MINUTE;
-        if (callMinutesAmountLeftInSeconds >= seconds) {
-            callMinutesAmountLeft -= seconds / SECONDS_IN_MINUTE;
+        if (callSecondsAmountLeft >= seconds) {
+            callSecondsAmountLeft -= seconds;
             callSeconds += seconds;
             return seconds;
         } else {
-            callMinutesAmountLeft = 0;
-            callSeconds += callMinutesAmountLeftInSeconds;
-            int phoneCallInSeconds = super.performCalling(seconds - callMinutesAmountLeftInSeconds);
-            return phoneCallInSeconds + callMinutesAmountLeftInSeconds;
+            callSeconds += callSecondsAmountLeft;
+            int phoneCallInSeconds = super.performCalling(seconds - callSecondsAmountLeft);
+            phoneCallInSeconds += callSecondsAmountLeft;
+            callSecondsAmountLeft = 0;
+            return phoneCallInSeconds;
         }
     }
 
@@ -54,8 +54,16 @@ public class MixPhoneContract extends CardPhoneContract {
 
     @Override
     public String toString() {
-        return String.format("%s%nSms'y do wykorzystania: %d%nMms'y do wykorzystania: %d%n" +
-                "Minuty do wykorzystania: %d", super.toString(), smsAmountLeft, mmsAmountLeft, callMinutesAmountLeft);
+        return String.format("%s%nSms'y do wykorzystania: %d%nMms'y do wykorzystania: %d%n%s%n",
+                super.toString(), smsAmountLeft, mmsAmountLeft, getMinutesOrSecondsCallLeftInfo());
+    }
+
+    private String getMinutesOrSecondsCallLeftInfo() {
+        if (callSecondsAmountLeft >= SECONDS_IN_MINUTE) {
+             return String.format("Minuty do wykorzystania: %d", callSecondsAmountLeft / SECONDS_IN_MINUTE);
+        } else {
+             return String.format("Sekundy do wykorzystania: %d", callSecondsAmountLeft);
+        }
     }
 
     @Override
@@ -70,11 +78,11 @@ public class MixPhoneContract extends CardPhoneContract {
             return false;
         }
         return smsAmountLeft == that.smsAmountLeft && mmsAmountLeft == that.mmsAmountLeft &&
-                callMinutesAmountLeft == that.callMinutesAmountLeft;
+                callSecondsAmountLeft == that.callSecondsAmountLeft;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), smsAmountLeft, mmsAmountLeft, callMinutesAmountLeft);
+        return Objects.hash(super.hashCode(), smsAmountLeft, mmsAmountLeft, callSecondsAmountLeft);
     }
 }

@@ -7,13 +7,13 @@ public class CardPhoneContract extends PhoneContract {
     double accountState;
     double smsCost;
     double mmsCost;
-    double callCostPerMinute;
+    double callCostPerSecond;
 
     public CardPhoneContract(double accountState, double smsCost, double mmsCost, double callCostPerMinute) {
         this.accountState = accountState;
         this.smsCost = smsCost;
         this.mmsCost = mmsCost;
-        this.callCostPerMinute = callCostPerMinute;
+        this.callCostPerSecond = callCostPerMinute / SECONDS_IN_MINUTE;
     }
 
     @Override
@@ -29,13 +29,14 @@ public class CardPhoneContract extends PhoneContract {
 
     @Override
     int performCalling(int seconds) {
-        double callCost = seconds * callCostPerMinute / SECONDS_IN_MINUTE;
+        double callCost = seconds * callCostPerSecond;
         if (callCost <= accountState) {
             accountState -= callCost;
             callSeconds += seconds;
             return seconds;
         } else {
-            int callInSeconds = (int) (SECONDS_IN_MINUTE * accountState / callCost);
+            int callInSeconds = (int) (accountState / callCostPerSecond);
+            accountState = 0;
             callSeconds += callInSeconds;
             return callInSeconds;
         }
@@ -72,11 +73,11 @@ public class CardPhoneContract extends PhoneContract {
         return Double.compare(that.accountState, accountState) == 0 &&
                 Double.compare(that.smsCost, smsCost) == 0 &&
                 Double.compare(that.mmsCost, mmsCost) == 0 &&
-                Double.compare(that.callCostPerMinute, callCostPerMinute) == 0;
+                Double.compare(that.callCostPerSecond, callCostPerSecond) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), accountState, smsCost, mmsCost, callCostPerMinute);
+        return Objects.hash(super.hashCode(), accountState, smsCost, mmsCost, callCostPerSecond);
     }
 }

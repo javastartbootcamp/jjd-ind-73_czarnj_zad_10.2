@@ -20,7 +20,7 @@ public class Phone {
 
     public void call(int seconds) {
         int callSeconds = phoneContract.performCalling(seconds);
-        System.out.printf("Rozmowa trwała %d%n", callSeconds);
+        System.out.printf("Rozmowa trwała %ds%n", callSeconds);
     }
 
     public void sendMms() {
