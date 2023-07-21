@@ -29,12 +29,7 @@ public class CardPhoneContract extends PhoneContract {
 
     @Override
     int performCalling(int seconds) {
-        int callMinutes = seconds / SECONDS_IN_MINUTE;
-        if (seconds / SECONDS_IN_MINUTE % SECONDS_IN_MINUTE != 0 || seconds < SECONDS_IN_MINUTE) {
-            // if the seconds are not full minutes, we treat the ending as the next minute
-            callMinutes++;
-        }
-        double callCost = callMinutes * callCostPerMinute;
+        double callCost = seconds * callCostPerMinute / SECONDS_IN_MINUTE;
         if (callCost <= accountState) {
             accountState -= callCost;
             callSeconds += seconds;
@@ -55,22 +50,6 @@ public class CardPhoneContract extends PhoneContract {
         } else {
             return false;
         }
-    }
-
-    public double getAccountState() {
-        return accountState;
-    }
-
-    public double getSmsCost() {
-        return smsCost;
-    }
-
-    public double getMmsCost() {
-        return mmsCost;
-    }
-
-    public double getCallCostPerMinute() {
-        return callCostPerMinute;
     }
 
     @Override

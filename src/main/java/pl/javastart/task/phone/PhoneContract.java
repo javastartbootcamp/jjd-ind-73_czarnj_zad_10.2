@@ -13,18 +13,6 @@ public abstract class PhoneContract {
 
     abstract boolean performMmsSending();
 
-    public int getSentSms() {
-        return sentSms;
-    }
-
-    public int getSentMms() {
-        return sentMms;
-    }
-
-    public int getCallSeconds() {
-        return callSeconds;
-    }
-
     @Override
     public String toString() {
         return String.format("=== STAN KONTA ===%nWysłanych SMSów: %d%nWysłanych MMSów: %d%n" +

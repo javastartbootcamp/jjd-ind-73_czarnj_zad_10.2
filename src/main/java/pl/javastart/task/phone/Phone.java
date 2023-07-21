@@ -36,14 +36,6 @@ public class Phone {
         System.out.println(phoneContract.toString());
     }
 
-    public PhoneContract getPhoneContract() {
-        return phoneContract;
-    }
-
-    public void setPhoneContract(PhoneContract phoneContract) {
-        this.phoneContract = phoneContract;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {

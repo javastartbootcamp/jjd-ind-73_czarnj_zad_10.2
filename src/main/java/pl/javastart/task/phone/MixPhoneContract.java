@@ -52,18 +52,6 @@ public class MixPhoneContract extends CardPhoneContract {
         }
     }
 
-    public int getSmsAmountLeft() {
-        return smsAmountLeft;
-    }
-
-    public int getMmsAmountLeft() {
-        return mmsAmountLeft;
-    }
-
-    public int getCallMinutesAmountLeft() {
-        return callMinutesAmountLeft;
-    }
-
     @Override
     public String toString() {
         return String.format("%s%nSms'y do wykorzystania: %d%nMms'y do wykorzystania: %d%n" +

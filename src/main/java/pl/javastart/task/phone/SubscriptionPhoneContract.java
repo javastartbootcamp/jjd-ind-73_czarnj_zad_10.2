@@ -37,14 +37,6 @@ public class SubscriptionPhoneContract extends PhoneContract {
         return false;
     }
 
-    public boolean isAbonamentPaid() {
-        return isAbonamentPaid;
-    }
-
-    public double getAccountCharge() {
-        return accountCharge;
-    }
-
     @Override
     public String toString() {
         return String.format("%s%nOpłata za abonament %.2f zł%nAbonament opłacony %b", super.toString(),
