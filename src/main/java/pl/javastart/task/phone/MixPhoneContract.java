@@ -60,9 +60,9 @@ public class MixPhoneContract extends CardPhoneContract {
 
     private String getMinutesOrSecondsCallLeftInfo() {
         if (callSecondsAmountLeft >= SECONDS_IN_MINUTE) {
-             return String.format("Minuty do wykorzystania: %d", callSecondsAmountLeft / SECONDS_IN_MINUTE);
+            return String.format("Minuty do wykorzystania: %d", callSecondsAmountLeft / SECONDS_IN_MINUTE);
         } else {
-             return String.format("Sekundy do wykorzystania: %d", callSecondsAmountLeft);
+            return String.format("Sekundy do wykorzystania: %d", callSecondsAmountLeft);
         }
     }
 
